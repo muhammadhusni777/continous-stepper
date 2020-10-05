@@ -1,0 +1,125 @@
+////////////////////////////////////
+////library stepper v0.1////////////
+////written by : Muhammad Husni/////
+////PT SYERGIE AUTOMA///////////////
+////////////////////////////////////
+
+
+
+#define A1        4                      
+#define A1_bar    6                     
+#define B1        5                     
+#define B1_bar    7                    
+
+#define A2        8                      
+#define A2_bar    10                     
+#define B2        9                     
+#define B2_bar    11     
+
+#define x        1000       //1000          
+#define stepsPerRevolution 100
+
+#include "step.h"
+
+int a = 0;
+int b = 0;
+int c = 0;
+
+int pot2;
+void setup() {
+  Serial.begin(9600);
+  // put your setup code here, to run once:
+ pinMode(A1, OUTPUT);
+  pinMode(A1_bar, OUTPUT);
+  pinMode(B1, OUTPUT);
+  pinMode(B1_bar, OUTPUT);
+ pinMode(A2, OUTPUT);
+  pinMode(A2_bar, OUTPUT);
+  pinMode(B2, OUTPUT);
+  pinMode(B2_bar, OUTPUT);
+
+}
+
+void loop() {
+int pot1 = map(analogRead(A0), 0, 1023, 0, 400);
+int pot2 = map(analogRead(A3), 0, 1023, 0,400);
+
+//steponeclockwise();  
+if (pot1 > a && pot2 == b) {
+ steponeclockwise();
+  a = a+1;
+  b = b-0;
+}
+
+
+//steponeanticlockwise();
+if (pot1 < a && b == pot2) {
+ steponeanticlockwise();
+ a = a-1;
+ b = b-0;
+ 
+}
+//steptwoclockwise();
+if (a == pot1 && b < pot2){
+  
+ steptwoclockwise();
+ a = a-0;
+ b = b+1;
+ 
+}
+
+//steptwoanticlockwise();
+if (a == pot1 && b > pot2){
+  
+ steptwoanticlockwise();
+ a = a-0;
+ b = b-1;
+ 
+}
+
+//steponeclockwisesteptwoanticlockwise();
+if (a < pot1 && b > pot2){
+  
+ steponeclockwisesteptwoanticlockwise();
+ a = a+1;
+ b = b-1;
+ 
+}
+
+//steponeanticlockwisesteptwoclockwise(); 
+if (a > pot1 && b < pot2){
+  
+ steponeanticlockwisesteptwoclockwise();
+ a = a-1;
+ b = b+1;
+ 
+}
+
+//steponeclockwisesteptwoclockwise();
+if (a < pot1 && b < pot2){
+  
+ steponeclockwisesteptwoclockwise();
+ a = a+1;
+ b = b+1;
+ 
+}
+
+//steponeanticlockwisesteptwoanticlockwise();
+if (a > pot1 && b > pot2){
+  
+ steponeanticlockwisesteptwoanticlockwise();
+ a = a-1;
+ b = b-1;
+ 
+}
+
+
+Serial.print (a);
+Serial.print("    ");
+Serial.print(b);
+Serial.print("    ");
+Serial.print(pot1);
+Serial.print("    ");
+Serial.println(pot2);
+}
+
